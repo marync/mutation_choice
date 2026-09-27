@@ -1,0 +1,11 @@
+Uncovering the basis of protein-protein interaction specificity with a combinatorially complete library
+
+Three sites in the antitoxin protein ParD3 mutated and assayed for binding to two toxin proteins, ParE3 and ParE2, in fitness assay.
+
+Wild type genotype: DKE (row 954).
+
+2 replicate experiments; r2 = 0.955 for ParE3 and 0.948 for ParE2.
+
+Amino acids numbered by the alphabetical order of the single-letter abbreviation.
+
+7882 out of 8000 possible genotypes (98.5%) sampled for both ParE3 and ParE2.
