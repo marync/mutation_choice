@@ -1,5 +1,5 @@
 # mutation_choice
-Code to support "Mutation choices biases the structure of empirical fitness landscapes."
+Code to support "Mutation choice biases the structure of empirical fitness landscapes."
 
 All simulations are run from jupyter notebooks in /notebooks, with supporting code in the /code folder.
 - figure_1.ipynb: Generates Figure 1.
