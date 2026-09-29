@@ -25,7 +25,7 @@ labels_full = {
 
 
 LINE_LW = 1            # connecting line width
-MARKER_SIZE = 4         # circle marker size
+MARKER_SIZE = 10         # circle marker size
 MARKER_EDGEWIDTH = .5   # circle marker black outline width
 ERR_ELINEWIDTH = 1.6     # error bar line width
 ERR_CAPSIZE = 0          # error bar cap size
@@ -83,7 +83,7 @@ def plot_series(ax, x, y, yerr, color):
 
 def plot_endpoint(ax, x, y, color, marker):
     s = ENDPOINT_PLUS_S if marker == "+" else ENDPOINT_X_S
-    ax.scatter([x], [y], marker=marker, s=s, color=color, linewidths=ENDPOINT_LINEWIDTH, zorder=5)
+    ax.scatter([x], [y], marker=marker, s=s, color=color, zorder=5)
     
 
 #M_diff, M_diff_sem = {}, {}
