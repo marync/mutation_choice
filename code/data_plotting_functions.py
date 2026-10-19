@@ -90,7 +90,7 @@ def pool_matrix_sums_numpy (matrix, m):
     return output_matrix
 
 
-def pvalue_heatmap (mat, statistic, M, scenarios, out_label=None, save=True, outputdir='.') :
+def pvalue_heatmap (mat, statistic, M, scenarios, out_label=None, save=True, outputdir='.', alpha=0.05) :
     # color map
     colors_pool = ["#008080", "#fcfcfc", "#ff7f0e"]
     my_cmap     = mcolors.LinearSegmentedColormap.from_list("teal_orange", colors_pool)
@@ -99,8 +99,11 @@ def pvalue_heatmap (mat, statistic, M, scenarios, out_label=None, save=True, out
     
     a           = np.nanmax (np.abs (mat[np.tril_indices (n)]))
     my_norm     = mcolors.Normalize (vmin=-a, vmax=a)
-    
-    bonf = .05 / (math.comb (n, 2)*(M+1))
+   
+    if 'W' in statistic : 
+        bonf = alpha / (math.comb (n, 2)*(M+1))
+    else :
+        bonf = alpha / math.comb (n, 2)
     print (bonf)
     
     # create the masks
