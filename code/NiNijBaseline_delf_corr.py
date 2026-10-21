@@ -99,20 +99,40 @@ def run(K_vals, reps, seed, out_path):
                 any_hosts = np.where(hits >= 1)[0]
                 shared_hosts = np.where(hits >= 2)[0]
 
-                mutant = founder.copy()
-                mutant[idx] *= -1
-
+                # f_i, f_ij: unchanged (founder-only baseline, any-hit / shared-hit host sets)
                 if len(any_hosts) > 0:
-                    pre = host_contrib_vec(any_hosts, founder, lc)
-                    vals[tag]['f_i'].append(np.mean(pre))
-                    post = host_contrib_vec(any_hosts, mutant, lc)
-                    vals[tag]['delta_f_i'].append(np.mean(post - pre))
-
+                    vals[tag]['f_i'].append(np.mean(host_contrib_vec(any_hosts, founder, lc)))
                 if len(shared_hosts) > 0:
-                    pre = host_contrib_vec(shared_hosts, founder, lc)
-                    vals[tag]['f_ij'].append(np.mean(pre))
-                    post = host_contrib_vec(shared_hosts, mutant, lc)
-                    vals[tag]['delta_f_ij'].append(np.mean(post - pre))
+                    vals[tag]['f_ij'].append(np.mean(host_contrib_vec(shared_hosts, founder, lc)))
+
+                # delta_f_i: per-locus single mutant, averaged over the 4 loci
+                per_locus_vals = []
+                for locus in idx:
+                    touched = np.where(mem[:, locus] == 1)[0]
+                    if len(touched) == 0:
+                        continue
+                    single_mutant = founder.copy()
+                    single_mutant[locus] *= -1
+                    pre = host_contrib_vec(touched, founder, lc)
+                    post = host_contrib_vec(touched, single_mutant, lc)
+                    per_locus_vals.append(np.mean(post - pre))
+                if per_locus_vals:
+                    vals[tag]['delta_f_i'].append(np.mean(per_locus_vals))
+
+                # delta_f_ij: per-pair double mutant, averaged over the 6 pairs
+                per_pair_vals = []
+                for a, b in pairs:
+                    li, lj = idx[a], idx[b]
+                    touched = np.where((mem[:, li] == 1) & (mem[:, lj] == 1))[0]
+                    if len(touched) == 0:
+                        continue
+                    pair_mutant = founder.copy()
+                    pair_mutant[[li, lj]] *= -1
+                    pre = host_contrib_vec(touched, founder, lc)
+                    post = host_contrib_vec(touched, pair_mutant, lc)
+                    per_pair_vals.append(np.mean(post - pre))
+                if per_pair_vals:
+                    vals[tag]['delta_f_ij'].append(np.mean(per_pair_vals))
 
         out['K'].append(K)
         out['n_noreach'].append(n_noreach)
