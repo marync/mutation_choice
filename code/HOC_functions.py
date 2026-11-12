@@ -163,7 +163,7 @@ def make_conditional_library_hoc ( ancestor, yancestor, yderived, M, sigma=1, rn
         mydic[int_to_string (ancestor)] = yancestor
         mydic[int_to_string (xevo)]     = yderived
         
-    return make_combinatorial_library (ancestor, mutations, mydic, sigma=sigma)
+    return make_combinatorial_library (ancestor, mutations, mydic, sigma=sigma, rng=rng)
 
     
 
@@ -217,7 +217,7 @@ def simulate_from_common_ancestor_hoc ( M, L, sigma=1, ntries=20, weighted=False
     mutations, ytraj = evolve_hoc (T=M, L=L, x0=ancestor, ydict=landscape, rng=rng) 
     
     # make combinatorial library
-    Xsuba, Yliba = make_combinatorial_library (x0=ancestor, mutations=mutations, ydict=landscape, sigma=1)
+    Xsuba, Yliba = make_combinatorial_library (x0=ancestor, mutations=mutations, ydict=landscape, sigma=1, rng=rng)
     r2s[ct,:], Aks[ct,:], nmaxs[ct,:], npaths[ct] = get_statistics_from_library ( Xsuba, Yliba )
     scenario_dict['adaptive'] = (Xsuba, Yliba, ytraj)
 
@@ -225,14 +225,14 @@ def simulate_from_common_ancestor_hoc ( M, L, sigma=1, ntries=20, weighted=False
     ct = 1
     
     bene_mutations = find_beneficial_mutations ( ancestor, landscape, M=M, rng=rng )
-    Xsubb, Ylibb   = make_combinatorial_library (x0=ancestor, mutations=bene_mutations, ydict=landscape, sigma=1) 
+    Xsubb, Ylibb   = make_combinatorial_library (x0=ancestor, mutations=bene_mutations, ydict=landscape, sigma=1, rng=rng) 
     r2s[ct,:], Aks[ct,:], nmaxs[ct,:], npaths[ct] = get_statistics_from_library ( Xsubb, Ylibb )
     scenario_dict['beneficial'] = (Xsubb, Ylibb)
 
     # Deleterious 
     ct = 2
     dele_mutations = find_deleterious_mutations ( ancestor, landscape, M=M, rng=rng )
-    Xsubd, Ylibd   = make_combinatorial_library (x0=ancestor, mutations=dele_mutations, ydict=landscape, sigma=1)
+    Xsubd, Ylibd   = make_combinatorial_library (x0=ancestor, mutations=dele_mutations, ydict=landscape, sigma=1, rng=rng)
     r2s[ct,:], Aks[ct,:], nmaxs[ct,:], npaths[ct] = get_statistics_from_library ( Xsubd, Ylibd )
     scenario_dict['deleterious'] = (Xsubd, Ylibd)
     if npaths[ct] > 0 :
@@ -243,7 +243,7 @@ def simulate_from_common_ancestor_hoc ( M, L, sigma=1, ntries=20, weighted=False
     # RANDOM
     ct = 3
     rand_mutations = rng.choice (np.arange (0, L, 1), size=M, replace=False)
-    Xsubr, Ylibr   = make_combinatorial_library (x0=ancestor, mutations=rand_mutations, ydict=landscape, sigma=1)
+    Xsubr, Ylibr   = make_combinatorial_library (x0=ancestor, mutations=rand_mutations, ydict=landscape, sigma=1, rng=rng)
     r2s[ct,:], Aks[ct,:], nmaxs[ct,:], npaths[ct] = get_statistics_from_library ( Xsubr, Ylibr )
     scenario_dict['random'] = (Xsubr, Ylibr)
 

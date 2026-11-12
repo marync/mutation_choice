@@ -202,7 +202,10 @@ def recode_library (anc, genos) :
 
     return new
 
-def make_combinatorial_library (x0, mutations, ydict, sigma=1) :
+def make_combinatorial_library (x0, mutations, ydict, sigma=1, rng=None) :
+
+    if rng is None :
+        rng = np.random.default_rng ()
 
     L = len (x0)
     
@@ -225,7 +228,7 @@ def make_combinatorial_library (x0, mutations, ydict, sigma=1) :
             else :
                 #print ('adding')
                 #print (int_to_string (X[ct,:]))
-                Y[ct] = np.random.normal (0, sigma)
+                Y[ct] = rng.normal (0, sigma)
                 ydict[int_to_string (X[ct,:])] = Y[ct]
 
         else :
