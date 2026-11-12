@@ -202,7 +202,7 @@ def split_triangle_heatmap(
 
     # One slim colorbar per region, stacked to the right.
     cb_u = fig.colorbar(im_upper, ax=ax, fraction=0.046, pad=0.25, shrink=.6)
-    cb_u.set_label(f"distnace max.")
+    cb_u.set_label(f"distance max.")
     cb_l = fig.colorbar(im_lower, ax=ax, fraction=0.046, pad=0.05, shrink=.6)
     cb_l.set_label(f"distance min.")
     if show_diagonal:
