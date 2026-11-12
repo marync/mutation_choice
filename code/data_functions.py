@@ -125,7 +125,7 @@ def empirical_pvalue (permutations, observed) :
     #print (p_lower)
     #print (p_upper)
 
-    return np.min ([1.0, 2 * np.min ([p_lower, p_upper]))
+    return np.min ([1.0, 2 * np.min ([p_lower, p_upper])])
 
 
 def try_n_times (n, func, *args, **kwargs):
