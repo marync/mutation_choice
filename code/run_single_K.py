@@ -65,7 +65,7 @@ def run_one_K(K, k_idx, n_K, reps, p, tot_muts, walk_ntries, sigma, methods, k_s
             r2_vals[method].append(r2_score(Ylib, predict_from_betas(lib, beta2, terms2)))
 
             lm_vals[method].append(count_total_local_maxima(lib, Ylib))
-            path_vals[method].append(count_accessible_paths_to_full_mutant(lib, Ylib, founder, strict=True))
+            path_vals[method].append(count_accessible_paths_to_full_mutant(lib, Ylib, founder, strict=False))
 
         del lc
 
