@@ -433,7 +433,7 @@ def permute_r2 (X, ys, B=100, rng=None) :
     R2_boot = np.zeros ((B, M+1))
     for b in range (B) :
         order_b = np.arange (0,n,1)
-        np.random.shuffle (order_b)
+        rng.shuffle (order_b)
         R2_boot[b,:], intercept, coefs = fit_regression_fourier (X[order_b,:], ys)
 
     R2_obs, intercept, coefs = fit_regression_fourier (X, ys)
