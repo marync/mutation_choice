@@ -77,8 +77,7 @@ def simulation_ancestor_wrapper (genos, phenos, nsims=100, indices=None, ntries=
         if seed is None :
             seed = np.random.choice (int (10**7))
             print ('Setting seed: ' + str (seed))
-        else :
-            rng = np.random.default_rng (seed)
+        rng = np.random.default_rng (seed)
 
 
     ntypes = 5
@@ -93,9 +92,9 @@ def simulation_ancestor_wrapper (genos, phenos, nsims=100, indices=None, ntries=
     i = 0
     while i < nsims :
         if indices is None :            
-            anc_idx = np.random.choice ( np.arange (0, n, 1) )
+            anc_idx = rng.choice ( np.arange (0, n, 1) )
         else :
-            anc_idx = np.random.choice ( indices )
+            anc_idx = rng.choice ( indices )
 
         # store ancestral genotype
         anc = cp.deepcopy (genos[anc_idx,:])
@@ -537,51 +536,51 @@ def default_aa_dict ( alphabetical=False ) :
 
 
 
-def simulation_scenario_wrapper (genos, phenos, scenario, nsims=100, indices=None) :
-    """
-    
-    """
-
-    n, M = genos.shape
-    
-    R2      = np.zeros ((nsims, M+1))
-    nMax    = np.zeros ((nsims, M+1))
-    nPaths  = np.zeros (nsims)
-    anclist = np.zeros (nsims)
-    
-    i = 0
-    while i < nsims :
-        if indices is None :            
-            anc_idx = np.random.choice ( np.arange (0, n, 1) )
-        else :
-            anc_idx = np.random.choice ( indices )
-
-        # store ancestral genotype
-        anc = cp.deepcopy (genos[anc_idx,:])
-    
-        try :
-            # simulate library according to scenario
-            Blib, ylib, ids = simulate_library (X=genos, ys=phenos, ancestor=anc, scenario=scenario)
-
-            # index of ancestral sequence
-            new_idx = np.where ( np.sum (Blib, axis=1) == 0 )[0][0]
-
-            # count maxima
-            nMax[i,:] = count_local_maxima_step (Blib, ylib, new_idx)
-            # compute R2            
-            R2[i,:]   = fit_regression_fourier (Blib, ylib)
-            # number paths
-            nPaths[i] = call_paths (Blib, ylib)
-
-            anclist[i] = anc_idx
-            # iterate successful simulation count
-            i += 1
-    
-        except Exception as e:
-            print('An error occurred at step ' + str (i) + ':', e)
-            i += 0
-
-    return R2, nMax, nPaths, anc_idx
+#def simulation_scenario_wrapper (genos, phenos, scenario, nsims=100, indices=None) :
+#    """
+#    
+#    """
+#
+#    n, M = genos.shape
+#    
+#    R2      = np.zeros ((nsims, M+1))
+#    nMax    = np.zeros ((nsims, M+1))
+#    nPaths  = np.zeros (nsims)
+#    anclist = np.zeros (nsims)
+#    
+#    i = 0
+#    while i < nsims :
+#        if indices is None :            
+#            anc_idx = np.random.choice ( np.arange (0, n, 1) )
+#        else :
+#            anc_idx = np.random.choice ( indices )
+#
+#        # store ancestral genotype
+#        anc = cp.deepcopy (genos[anc_idx,:])
+#    
+#        try :
+#            # simulate library according to scenario
+#            Blib, ylib, ids = simulate_library (X=genos, ys=phenos, ancestor=anc, scenario=scenario)
+#
+#            # index of ancestral sequence
+#            new_idx = np.where ( np.sum (Blib, axis=1) == 0 )[0][0]
+#
+#            # count maxima
+#            nMax[i,:] = count_local_maxima_step (Blib, ylib, new_idx)
+#            # compute R2            
+#            R2[i,:]   = fit_regression_fourier (Blib, ylib)
+#            # number paths
+#            nPaths[i] = call_paths (Blib, ylib)
+#
+#            anclist[i] = anc_idx
+#            # iterate successful simulation count
+#            i += 1
+#    
+#        except Exception as e:
+#            print('An error occurred at step ' + str (i) + ':', e)
+#            i += 0
+#
+#    return R2, nMax, nPaths, anc_idx
 
 
 def resample_poisson (N0, N1, nreps=100, eta=1, rng=None) :
