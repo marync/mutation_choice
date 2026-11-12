@@ -22,7 +22,7 @@ def count_local_maxima ( Xmat, Ys ) :
     for i in range (n) :
         neighbors_i = np.where ( D[i,:] == 1 )[0]
         
-        if np.sum (Ys[neighbors_i] < Ys[i]) == len (neighbors_i) :
+        if np.sum (Ys[neighbors_i] <= Ys[i]) == len (neighbors_i) :
             nmax += 1
 
     return nmax
