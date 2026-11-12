@@ -14,8 +14,7 @@ def simulate_from_common_ancestor (ancestor, X, ys, ntries=10, epsilon=0.01, wei
         if seed is None :
             seed = np.random.choice (int (10**7))
             print ('Setting seed: ' + str (seed))
-        else :
-            rng = np.random.default_rng (seed)
+        rng = np.random.default_rng (seed)
 
     ntypes = 5      # beneficial, adaptive, conditional, random
     n, M   = X.shape
