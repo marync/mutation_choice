@@ -49,7 +49,8 @@ def find_viable_paths ( paths, ydict ) :
         for seq in path_i :
             yvals[ct] = ydict[int_to_string (seq)]
             ct += 1
-        if np.all (np.diff (yvals)  > 0 ) :
+        # greater than or equal to -- consistent with paper
+        if np.all (np.diff (yvals) >= 0 ) :
             viable_paths += 1
 
     return viable_paths
@@ -69,7 +70,8 @@ def check_path ( path, ydict ) :
     for seq in path :
         yvals[ct] = ydict[int_to_string (seq)]
         ct += 1
-        if np.all (np.diff (yvals)  > 0 ) :
+        # greater than or equal to -- consistent with paper
+        if np.all (np.diff (yvals) >= 0 ) :
             viable = 1
 
     return viable
