@@ -48,7 +48,7 @@ def run_full_K_sweep(reps, p):
 
 
 def run_full_hoc(reps, p):
-    out, n_noreach = run_hoc(reps, p, TOT_MUTS, 1000, SIGMA, 5000, METHODS, HOC_SEED)
+    out, n_noreach = run_hoc(reps, p, TOT_MUTS, WALK_NTRIES, SIGMA, 5000, METHODS, HOC_SEED)
     flat = {"n_noreach": n_noreach}
     for metric in out:
         for method in METHODS:
