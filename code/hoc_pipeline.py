@@ -57,8 +57,9 @@ def hoc_fitness(genos, lc, average=True):
 
 def hoc_adaptive_walk_single(founder, lc, tot_muts, max_attempts, rng):
     Y0 = hoc_fitness(founder[None, :], lc)
-    curr = deepcopy(founder)
+    #curr = deepcopy(founder)
     for _a in range(max_attempts):
+        curr = deepcopy(founder) # restart walk from the founder
         fixloci = []
         Ycurr = float(Y0[0])
         Ytraj = [Ycurr]
