@@ -167,7 +167,7 @@ def run_hoc(reps, p, tot_muts, max_attempts, sigma, n_cond_samples, methods, see
             r2_vals[method].append(r2_score(Ylib, predict_from_betas(lib, beta2, terms2)))
 
             lm_vals[method].append(count_total_local_maxima(lib, Ylib))
-            path_vals[method].append(count_accessible_paths_to_full_mutant(lib, Ylib, founder, strict=True))
+            path_vals[method].append(count_accessible_paths_to_full_mutant(lib, Ylib, founder, strict=False))
 
         del lc
 
